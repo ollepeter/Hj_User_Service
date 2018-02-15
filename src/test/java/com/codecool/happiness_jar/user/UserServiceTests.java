@@ -1,4 +1,4 @@
-package com.codecool.happiness_jar.hj_user_service;
+package com.codecool.happiness_jar.user;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class HjUserServiceTests {
+public class UserServiceTests {
 
 	@Test
 	public void contextLoads() {
