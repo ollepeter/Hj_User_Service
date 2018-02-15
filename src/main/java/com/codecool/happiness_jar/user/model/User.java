@@ -1,11 +1,9 @@
-package com.codecool.happiness_jar.hj_user_service.model;
+package com.codecool.happiness_jar.user.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +12,7 @@ public class User {
     private String email;
     private String password;
 
-    public User () {
+    public User() {
     }
 
     public User(String name, String email, String password) {
