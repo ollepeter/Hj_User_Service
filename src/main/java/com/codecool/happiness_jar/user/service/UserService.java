@@ -24,4 +24,8 @@ public class UserService {
     public void saveUser(User user) {
         userRepository.saveAndFlush(user);
     }
+
+    public void deleteUserById(int userId) {
+        userRepository.delete(userId);
+    }
 }
