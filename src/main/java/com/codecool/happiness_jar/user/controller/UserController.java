@@ -4,11 +4,14 @@ package com.codecool.happiness_jar.user.controller;
 import com.codecool.happiness_jar.user.model.User;
 import com.codecool.happiness_jar.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -31,6 +34,30 @@ public class UserController {
             userService.deleteUserById(userId);
         return "User with Id: " + userId + "has been deleted!";
     }
+
+    @PostMapping(value = "/registration-save")
+    public ResponseEntity<Map<String, String>> registerUser(
+                                       @RequestParam("name") String name,
+                                       @RequestParam("email") String email,
+                                       @RequestParam("hashedpassword") String hashedPassword) {
+
+        User registerUser = new User(name, email, hashedPassword);
+        Map<String, String> responseMessage = new HashMap<>();
+        ResponseEntity<Map<String, String>> responseEntity = new ResponseEntity<>(responseMessage, HttpStatus.OK);
+        // TODO check if already registered
+        try {
+            userService.saveUser(registerUser);
+            responseMessage.put("success", "User has been registered.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseMessage.put("error", "Faild to registration!");
+        }
+        return responseEntity;
+    }
+
+
+
+
 
 
 }
