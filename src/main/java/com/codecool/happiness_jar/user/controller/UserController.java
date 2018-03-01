@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,22 +43,24 @@ public class UserController {
                                        @RequestParam("hashedpassword") String hashedPassword) {
 
         User registerUser = new User(name, email, hashedPassword);
+
         Map<String, String> responseMessage = new HashMap<>();
         ResponseEntity<Map<String, String>> responseEntity = new ResponseEntity<>(responseMessage, HttpStatus.OK);
-        // TODO check if already registered
+
         try {
+            for (User user : userService.getAllUsers()) {
+                if(user.getEmail().equals(email)) {
+                    responseMessage.put("error", "User already Registered!");
+                    return responseEntity;
+                }
+            }
             userService.saveUser(registerUser);
-            responseMessage.put("success", "User has been registered.");
+            responseMessage.put("success", "Registration Success.");
         } catch (Exception e) {
             e.printStackTrace();
-            responseMessage.put("error", "Faild to registration!");
+            responseMessage.put("error", "Registration Failed!");
         }
         return responseEntity;
     }
-
-
-
-
-
 
 }
